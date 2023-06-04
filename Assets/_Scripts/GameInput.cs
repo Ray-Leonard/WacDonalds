@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,8 @@ public class GameInput : MonoBehaviour
 {
     // singelton
 
+    // an EventHandler delegate in GameInput class so that other classes can grab access and listen to
+    public event EventHandler OnInteractAction;
 
     private PlayerInputActions playerInputActions;
     private void Awake()
@@ -18,12 +21,20 @@ public class GameInput : MonoBehaviour
         */ 
         playerInputActions = new PlayerInputActions();
         playerInputActions.Player.Enable();
+
+        // subscribe a listener to playerInputActions' Interact performed event, so we know when the interact input action is performed
+        playerInputActions.Player.Interact.performed += Interact_performed;
+    }
+
+    private void Interact_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        OnInteractAction?.Invoke(this, EventArgs.Empty);
     }
 
     public Vector2 GetTopDownMovementVectorNormalized()
     {
         // read the value as how we define in the action
-        Vector2 inputVector = playerInputActions.Player.Move_TopDown.ReadValue<Vector2>();
+        Vector2 inputVector = playerInputActions.Player.Move.ReadValue<Vector2>();
 
         inputVector = inputVector.normalized;
 
