@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Player_TopDown : MonoBehaviour
 {
+    public static Player_TopDown Instance { get; private set; }
+    
     [SerializeField] private GameInput gameInput;
     [Header("Movement")]
     [SerializeField] private float movementSpeed;
@@ -17,8 +20,24 @@ public class Player_TopDown : MonoBehaviour
     [SerializeField] private float interactDistance;
     [SerializeField] private LayerMask countersLayerMask;
     private Vector3 lastInteractDir;
+    private ClearCounter selectedCounter;
+    public event EventHandler<OnSelectedCounterChangedEventArgs> OnSelectedCounterChanged;
+    // event argument class that extens EventArgs
+    public class OnSelectedCounterChangedEventArgs : EventArgs
+    {
+        public ClearCounter selectedCounter;
+    }
 
     private bool isWalking;
+
+    private void Awake()
+    {
+        if(Instance != null)
+        {
+            Debug.LogError("There is more than one Player instance");
+        }
+        Instance = this;
+    }
 
     private void Start()
     {
@@ -47,7 +66,10 @@ public class Player_TopDown : MonoBehaviour
 
     private void GameInput_OnInteractAction(object sender, System.EventArgs e)
     {
-        throw new System.NotImplementedException();
+        if(selectedCounter != null)
+        {
+            selectedCounter.Interact();
+        }
     }
 
     private void HandleInteractions()
@@ -67,8 +89,22 @@ public class Player_TopDown : MonoBehaviour
             // we're hitting a ClearCounter
             if(raycastHit.transform.TryGetComponent(out ClearCounter clearCounter))
             {
-                //clearCounter.Interact();
+                // record the selected counter when a different one has been selected.
+                if(clearCounter != selectedCounter)
+                {
+                    SetSelectedCounter(clearCounter);
+                }
             }
+            else
+            {
+                // hit something other than clear counter
+                SetSelectedCounter(null);
+            }
+        }
+        else
+        {
+            // raycast did not hit anything.
+            SetSelectedCounter(null);
         }
     }
 
@@ -146,5 +182,15 @@ public class Player_TopDown : MonoBehaviour
                 transform.position += moveDir * moveDistance;
             }
         }
+    }
+
+    private void SetSelectedCounter(ClearCounter selectedCounter)
+    {
+        this.selectedCounter = selectedCounter;
+        // Fire selected counter changed event
+        OnSelectedCounterChanged?.Invoke(this, new OnSelectedCounterChangedEventArgs
+        {
+            selectedCounter = selectedCounter
+        });
     }
 }
