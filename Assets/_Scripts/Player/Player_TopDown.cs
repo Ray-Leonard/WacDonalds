@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player_TopDown : MonoBehaviour
+public class Player_TopDown : MonoBehaviour, IKitchenObjectParent
 {
     public static Player_TopDown Instance { get; private set; }
     
@@ -19,8 +19,10 @@ public class Player_TopDown : MonoBehaviour
     [Header("Interaction")]
     [SerializeField] private float interactDistance;
     [SerializeField] private LayerMask countersLayerMask;
+
     private Vector3 lastInteractDir;
     private ClearCounter selectedCounter;
+
     public event EventHandler<OnSelectedCounterChangedEventArgs> OnSelectedCounterChanged;
     // event argument class that extens EventArgs
     public class OnSelectedCounterChangedEventArgs : EventArgs
@@ -28,7 +30,13 @@ public class Player_TopDown : MonoBehaviour
         public ClearCounter selectedCounter;
     }
 
+
+    [SerializeField] private Transform kitchenObjectHoldPoint;
+    private KitchenObject kitchenObject;
+
+
     private bool isWalking;
+
 
     private void Awake()
     {
@@ -68,7 +76,7 @@ public class Player_TopDown : MonoBehaviour
     {
         if(selectedCounter != null)
         {
-            selectedCounter.Interact();
+            selectedCounter.Interact(this);
         }
     }
 
@@ -192,5 +200,31 @@ public class Player_TopDown : MonoBehaviour
         {
             selectedCounter = selectedCounter
         });
+    }
+
+
+    public Transform GetKitchenObjectFollowTransform()
+    {
+        return kitchenObjectHoldPoint;
+    }
+
+    public void SetKitchenObject(KitchenObject kitchenObject)
+    {
+        this.kitchenObject = kitchenObject;
+    }
+
+    public KitchenObject GetKitchenObject()
+    {
+        return kitchenObject;
+    }
+
+    public void ClearKitchenObject()
+    {
+        kitchenObject = null;
+    }
+
+    public bool HasKitchenObject()
+    {
+        return kitchenObject != null;
     }
 }
