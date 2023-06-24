@@ -9,6 +9,7 @@ public class GameInput : MonoBehaviour
 
     // an EventHandler delegate in GameInput class so that other classes can grab access and listen to
     public event EventHandler OnInteractAction;
+    public event EventHandler OnInteractAlternateAction;
 
     private PlayerInputActions playerInputActions;
     private void Awake()
@@ -24,6 +25,12 @@ public class GameInput : MonoBehaviour
 
         // subscribe a listener to playerInputActions' Interact performed event, so we know when the interact input action is performed
         playerInputActions.Player.Interact.performed += Interact_performed;
+        playerInputActions.Player.InteractAlternate.performed += InteractAlternate_performed;
+    }
+
+    private void InteractAlternate_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        OnInteractAlternateAction?.Invoke(this, EventArgs.Empty);
     }
 
     private void Interact_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)

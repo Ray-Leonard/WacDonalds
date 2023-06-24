@@ -5,19 +5,21 @@ using System;
 
 public class ContainerCounter : BaseCounter
 {
-
+    // event to trigger when play grabs an object from container, notify the container visual to play animation.
     public event EventHandler OnPlayerGrabObject;
 
     [SerializeField] private KitchenObjectSO kitchenObjectSO;
 
     public override void Interact(Player_TopDown player)
     {
-        // spawn the kitchen object.
-        // give it to the player immediately after spawning.
-        Transform kitchenObjectTransform = Instantiate(kitchenObjectSO.prefab);
-        kitchenObjectTransform.GetComponent<KitchenObject>().SetKitchenObjectParent(player);
+        if(!player.HasKitchenObject())
+        {
+            // spawn the kitchen object when the player is not carrying anything.
+            // give it to the player immediately after spawning.
+            KitchenObject.SpawnKitchenObject(kitchenObjectSO, player);
 
-        OnPlayerGrabObject?.Invoke(this, EventArgs.Empty);
+            OnPlayerGrabObject?.Invoke(this, EventArgs.Empty);
+        }
     }
 
 

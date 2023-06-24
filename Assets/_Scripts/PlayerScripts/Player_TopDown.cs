@@ -51,6 +51,7 @@ public class Player_TopDown : MonoBehaviour, IKitchenObjectParent
     {
         // listen to gameInput's OnInteractAction event
         gameInput.OnInteractAction += GameInput_OnInteractAction;
+        gameInput.OnInteractAlternateAction += GameInput_OnInteractAlternateAction;
     }
 
 
@@ -77,6 +78,14 @@ public class Player_TopDown : MonoBehaviour, IKitchenObjectParent
         if(selectedCounter != null)
         {
             selectedCounter.Interact(this);
+        }
+    }
+
+    private void GameInput_OnInteractAlternateAction(object sender, EventArgs e)
+    {
+        if (selectedCounter != null)
+        {
+            selectedCounter.InteractAlternate(this);
         }
     }
 

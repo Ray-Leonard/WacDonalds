@@ -15,6 +15,11 @@ public class BaseCounter : MonoBehaviour, IKitchenObjectParent
         Debug.LogError("BaseCounter.Interact() should never be triggered!");
     }
 
+    public virtual void InteractAlternate(Player_TopDown player)
+    {
+        Debug.LogError("BaseCounter.InteractAlternate() should never be triggered!");
+    }
+
     public Transform GetKitchenObjectFollowTransform()
     {
         return counterTopPoint;
