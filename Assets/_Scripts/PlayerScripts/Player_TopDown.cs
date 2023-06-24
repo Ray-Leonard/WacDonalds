@@ -21,13 +21,13 @@ public class Player_TopDown : MonoBehaviour, IKitchenObjectParent
     [SerializeField] private LayerMask countersLayerMask;
 
     private Vector3 lastInteractDir;
-    private ClearCounter selectedCounter;
+    private BaseCounter selectedCounter;
 
     public event EventHandler<OnSelectedCounterChangedEventArgs> OnSelectedCounterChanged;
     // event argument class that extens EventArgs
     public class OnSelectedCounterChangedEventArgs : EventArgs
     {
-        public ClearCounter selectedCounter;
+        public BaseCounter selectedCounter;
     }
 
 
@@ -94,18 +94,18 @@ public class Player_TopDown : MonoBehaviour, IKitchenObjectParent
         // use raycast to see if there's anything in front of the player that they can interact with.
         if(Physics.Raycast(transform.position, lastInteractDir, out RaycastHit raycastHit, interactDistance, countersLayerMask))
         {
-            // we're hitting a ClearCounter
-            if(raycastHit.transform.TryGetComponent(out ClearCounter clearCounter))
+            // we're hitting a counter
+            if(raycastHit.transform.TryGetComponent(out BaseCounter baseCounter))
             {
                 // record the selected counter when a different one has been selected.
-                if(clearCounter != selectedCounter)
+                if(baseCounter != selectedCounter)
                 {
-                    SetSelectedCounter(clearCounter);
+                    SetSelectedCounter(baseCounter);
                 }
             }
             else
             {
-                // hit something other than clear counter
+                // hit something other than a counter
                 SetSelectedCounter(null);
             }
         }
@@ -192,7 +192,7 @@ public class Player_TopDown : MonoBehaviour, IKitchenObjectParent
         }
     }
 
-    private void SetSelectedCounter(ClearCounter selectedCounter)
+    private void SetSelectedCounter(BaseCounter selectedCounter)
     {
         this.selectedCounter = selectedCounter;
         // Fire selected counter changed event
