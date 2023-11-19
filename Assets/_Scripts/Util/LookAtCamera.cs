@@ -8,7 +8,7 @@ public class LookAtCamera : MonoBehaviour
     {
         LookAt,             // directly look at camera
         LookAtInverted,
-        CameraForward,      // camera position will not affect the target rotation.
+        CameraForward,      // object forward is the same as camera forward. 
         CameraForwardInverted
     }
 
