@@ -103,11 +103,11 @@ public class Player_TopDown : MonoBehaviour, IKitchenObjectParent
 
         bool canInteract = false;
         RaycastHit raycastHit;
-        BaseCounter baseCounter = null;
+        BaseCounter hitCounter = null;
         // determine if there's a counter *in front* (same as moving dir) of the player that can interact with. 
         if(Physics.Raycast(transform.position, lastInteractDir, out raycastHit, interactDistance, countersLayerMask))
         {
-            if(raycastHit.transform.TryGetComponent(out baseCounter))
+            if(raycastHit.transform.TryGetComponent(out hitCounter))
             {
                 canInteract = true;
             }
@@ -122,7 +122,7 @@ public class Player_TopDown : MonoBehaviour, IKitchenObjectParent
             Vector3 interactDirLeft = Quaternion.Euler(0, -90, 0) * lastInteractDir;
             if (Physics.Raycast(transform.position, interactDirLeft, out raycastHit, interactDistance, countersLayerMask))
             {
-                if (raycastHit.transform.TryGetComponent(out baseCounter))
+                if (raycastHit.transform.TryGetComponent(out hitCounter))
                 {
                     canInteract = true;
                 }
@@ -140,7 +140,7 @@ public class Player_TopDown : MonoBehaviour, IKitchenObjectParent
                 Vector3 interactDirRight = Quaternion.Euler(0, 90, 0) * lastInteractDir;
                 if (Physics.Raycast(transform.position, interactDirRight, out raycastHit, interactDistance, countersLayerMask))
                 {
-                    if (raycastHit.transform.TryGetComponent(out baseCounter))
+                    if (raycastHit.transform.TryGetComponent(out hitCounter))
                     {
                         canInteract = true;
                     }
@@ -158,7 +158,7 @@ public class Player_TopDown : MonoBehaviour, IKitchenObjectParent
                     Vector3 interactDirback = Quaternion.Euler(0, 180, 0) * lastInteractDir;
                     if (Physics.Raycast(transform.position, interactDirback, out raycastHit, interactDistance, countersLayerMask))
                     {
-                        if (raycastHit.transform.TryGetComponent(out baseCounter))
+                        if (raycastHit.transform.TryGetComponent(out hitCounter))
                         {
                             canInteract = true;
                         }
@@ -184,40 +184,15 @@ public class Player_TopDown : MonoBehaviour, IKitchenObjectParent
         if (canInteract)
         {
             // record the selected counter when a different one has been selected.
-            if (baseCounter != selectedCounter)
+            if (hitCounter != selectedCounter)
             {
-                SetSelectedCounter(baseCounter);
+                SetSelectedCounter(hitCounter);
             }
         }
         else
         {
             SetSelectedCounter(null);
         }
-
-
-        //// use raycast to see if there's anything in front of the player that they can interact with.
-        //if (Physics.Raycast(transform.position, lastInteractDir, out RaycastHit raycastHit, interactDistance, countersLayerMask))
-        //{
-        //    // we're hitting a counter
-        //    if(raycastHit.transform.TryGetComponent(out BaseCounter baseCounter))
-        //    {
-        //        // record the selected counter when a different one has been selected.
-        //        if(baseCounter != selectedCounter)
-        //        {
-        //            SetSelectedCounter(baseCounter);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        // hit something other than a counter
-        //        SetSelectedCounter(null);
-        //    }
-        //}
-        //else
-        //{
-        //    // none of the raycasts hit anything.
-        //    SetSelectedCounter(null);
-        //}
     }
 
 

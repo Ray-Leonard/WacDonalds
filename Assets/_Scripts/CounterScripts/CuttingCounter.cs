@@ -146,8 +146,4 @@ public class CuttingCounter : BaseCounter
         CuttingRecipeSO cuttingRecipeSO = GetCuttingRecipeSOForInput(inputKitchenObjectSO);
         return cuttingRecipeSO != null;
     }
-
-
-
-
 }
