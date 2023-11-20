@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static IHasProgress;
 
-public class CuttingCounter : BaseCounter
+public class CuttingCounter : BaseCounter, IHasProgress
 {
     [SerializeField] private CuttingRecipeSO[] cuttingRecipeSOArray;
 
@@ -12,10 +13,6 @@ public class CuttingCounter : BaseCounter
     private bool canPickup;
 
     public event EventHandler<OnProgressChangedEventArgs> OnProgressChanged;
-    public class OnProgressChangedEventArgs : EventArgs
-    {
-        public float progressNormalized;
-    }
     public event EventHandler OnCut;
 
     public override void Interact(Player_TopDown player)
