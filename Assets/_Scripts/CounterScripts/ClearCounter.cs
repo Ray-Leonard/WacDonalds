@@ -35,7 +35,7 @@ public class ClearCounter : BaseCounter
                         GetKitchenObject().DestroySelf();
                     }
                 }
-                // player is not holding a plate, but something else
+                // player is not holding a plate, but a normal kitchen object
                 else
                 {
                     // then check if there's a plate on the counter

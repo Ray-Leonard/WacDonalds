@@ -12,11 +12,11 @@ public class PlatesCounter : BaseCounter
 
     // the time interval between each spawn
     private float spawnPlateTimer = 0f;
-    private float spawnPlateTimerMax = 4f;
+    [SerializeField] private float spawnPlateTimerMax = 4f;
 
     // keep track of how many plates has been spawned.
     private int platesSpawnedAmount = 0;
-    private int platesSpawnedAmountMax = 4;
+    [SerializeField] private int platesSpawnedAmountMax = 4;
 
 
     // logic of updating the available plate
@@ -39,17 +39,16 @@ public class PlatesCounter : BaseCounter
 
     public override void Interact(Player_TopDown player)
     {
-        if (!player.HasKitchenObject())
+        // there is at least 1 plate to pick up
+        if (platesSpawnedAmount > 0)
         {
             // player is not carrying anything
-            if(platesSpawnedAmount > 0)
+            if (!player.HasKitchenObject())
             {
-                // there is at least 1 plate to pick up
-
                 // decrease the counter amount
                 platesSpawnedAmount--;
 
-                // spawn the actual plate kitchen object
+                // spawn the actual plate kitchen object and give it to player
                 KitchenObject.SpawnKitchenObject(plateKitchenObjectSO, player);
 
                 // update the visuals.
