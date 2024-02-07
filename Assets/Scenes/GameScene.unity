@@ -1508,6 +1508,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20d215fe26ad7d445857d2dfb1f5e080, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  menuSO: {fileID: 11400000, guid: 7f768b6142e098d4097a4a3850c3e8d5, type: 2}
 --- !u!4 &919509240
 Transform:
   m_ObjectHideFlags: 0

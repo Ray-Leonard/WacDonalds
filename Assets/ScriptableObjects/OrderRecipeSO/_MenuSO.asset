@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6166039a4af58cc43ad77e528faa5f3c, type: 3}
+  m_Name: _MenuSO
+  m_EditorClassIdentifier: 
+  orderRecipeSOList:
+  - {fileID: 11400000, guid: 30f0f01c71026de48a8b54b2bbab69bb, type: 2}
+  - {fileID: 11400000, guid: 08c83a2a72a00ae4398642babde080bd, type: 2}
+  - {fileID: 11400000, guid: ed47d85e2b449564a8589f547494b438, type: 2}
+  - {fileID: 11400000, guid: 9151466a12ad3aa409fb02a4ad30d70c, type: 2}

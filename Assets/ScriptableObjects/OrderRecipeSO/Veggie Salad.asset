@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb5c361144d03da40a14087631ee0e09, type: 3}
+  m_Name: Veggie Salad
+  m_EditorClassIdentifier: 
+  kitchenObjectSOList:
+  - {fileID: 11400000, guid: 68c6c6a35f1b5b9448150f5697a05de4, type: 2}
+  - {fileID: 11400000, guid: afef2c2389bae294eaa1f6fa61ec9756, type: 2}
+  recipeName: Veggie Salad
