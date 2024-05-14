@@ -1,10 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class DeliveryManager : MonoBehaviour
 {
+    public event EventHandler OnOrderSpawned;
+    public event EventHandler OnOrderCompleted;
+
     public static DeliveryManager Instance { get; private set; }
 
     [SerializeField] private MenuSO menuSO;             // contains all the recipe SO.
@@ -37,9 +40,10 @@ public class DeliveryManager : MonoBehaviour
             if(waitingOrderSOList.Count < waitingOrdersMax)
             {
                 // get a new recipe from menu and add to waitingOrderList
-                OrderRecipeSO waitingRecipeSO = menuSO.orderRecipeSOList[Random.Range(0, menuSO.orderRecipeSOList.Count)];
+                OrderRecipeSO waitingRecipeSO = menuSO.orderRecipeSOList[UnityEngine.Random.Range(0, menuSO.orderRecipeSOList.Count)];
                 waitingOrderSOList.Add(waitingRecipeSO);
-                Debug.Log("New Order: " + waitingRecipeSO.name);
+
+                OnOrderSpawned?.Invoke(this, EventArgs.Empty);
             }
         }
     }
@@ -76,12 +80,11 @@ public class DeliveryManager : MonoBehaviour
                 // that means the plate matches with the order
                 if(isPlateContentMatchesRecipe)
                 {
-                    // player delivered the correct order
-                    Debug.Log("Player delivered the correct order");
-
                     // remove the order from the waiting list.
                     waitingOrderSOList.RemoveAt(i);
                     // does not need to continue the search
+
+                    OnOrderCompleted?.Invoke(this, EventArgs.Empty);
                     return;
                 }
             }
@@ -89,5 +92,10 @@ public class DeliveryManager : MonoBehaviour
 
         // otherwise, if none of the search finds the correct order, it is a wrong delivery.
         Debug.Log("Player did not deliver a correct recipe");
+    }
+
+    public List<OrderRecipeSO> GetWaitingOrderSOList()
+    {
+        return waitingOrderSOList;  
     }
 }
