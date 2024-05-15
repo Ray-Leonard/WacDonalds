@@ -7,6 +7,8 @@ public class DeliveryManager : MonoBehaviour
 {
     public event EventHandler OnOrderSpawned;
     public event EventHandler OnOrderCompleted;
+    public event EventHandler OnOrderSuccess;
+    public event EventHandler OnOrderFailed;
 
     public static DeliveryManager Instance { get; private set; }
 
@@ -85,6 +87,7 @@ public class DeliveryManager : MonoBehaviour
                     // does not need to continue the search
 
                     OnOrderCompleted?.Invoke(this, EventArgs.Empty);
+                    OnOrderSuccess?.Invoke(this, EventArgs.Empty);
                     return;
                 }
             }
@@ -92,6 +95,8 @@ public class DeliveryManager : MonoBehaviour
 
         // otherwise, if none of the search finds the correct order, it is a wrong delivery.
         Debug.Log("Player did not deliver a correct recipe");
+        OnOrderFailed?.Invoke(this, EventArgs.Empty);
+
     }
 
     public List<OrderRecipeSO> GetWaitingOrderSOList()

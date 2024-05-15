@@ -12,6 +12,7 @@ public class CuttingCounter : BaseCounter, IHasProgress
     // if cutting is in progress, then player can't pick up the im progress item.
     private bool canPickup;
 
+    public static event EventHandler OnAnyCut;
     public event EventHandler<OnProgressChangedEventArgs> OnProgressChanged;
     public event EventHandler OnCut;
 
@@ -88,6 +89,7 @@ public class CuttingCounter : BaseCounter, IHasProgress
 
             // fire off OnCut event
             OnCut?.Invoke(this, EventArgs.Empty);
+            OnAnyCut?.Invoke(this, EventArgs.Empty);
 
             // compare the cutting progress with the max defined in the recipe
             cuttingProgress++;

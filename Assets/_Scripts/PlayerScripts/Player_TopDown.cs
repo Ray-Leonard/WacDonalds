@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Player_TopDown : MonoBehaviour, IKitchenObjectParent
 {
+    public event EventHandler OnPickedSomething;
+
     public static Player_TopDown Instance { get; private set; }
     
     [SerializeField] private GameInput gameInput;
@@ -290,6 +292,12 @@ public class Player_TopDown : MonoBehaviour, IKitchenObjectParent
     public void SetKitchenObject(KitchenObject kitchenObject)
     {
         this.kitchenObject = kitchenObject;
+
+        // check player pick up something
+        if(kitchenObject != null)
+        {
+            OnPickedSomething?.Invoke(this, EventArgs.Empty);
+        }
     }
 
     public KitchenObject GetKitchenObject()
