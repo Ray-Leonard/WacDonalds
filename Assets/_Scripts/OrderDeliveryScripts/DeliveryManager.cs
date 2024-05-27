@@ -28,7 +28,8 @@ public class DeliveryManager : MonoBehaviour
         }
         Instance = this; 
 
-        waitingOrderSOList= new List<OrderRecipeSO>();
+        waitingOrderSOList = new List<OrderRecipeSO>();
+
     }
 
     private void Update()
