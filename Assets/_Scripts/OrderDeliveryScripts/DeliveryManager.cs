@@ -20,6 +20,9 @@ public class DeliveryManager : MonoBehaviour
     private float spawnOrderTimerMax = 4f;
     private int waitingOrdersMax = 4;
 
+    // track how many recipes has player successfully delivered!
+    private int successfulOrderCount = 0;
+
     private void Awake()
     {
         if (Instance != null)
@@ -87,6 +90,8 @@ public class DeliveryManager : MonoBehaviour
                     waitingOrderSOList.RemoveAt(i);
                     // does not need to continue the search
 
+                    successfulOrderCount++;
+
                     OnOrderCompleted?.Invoke(this, EventArgs.Empty);
                     OnOrderSuccess?.Invoke(this, EventArgs.Empty);
                     return;
@@ -103,5 +108,10 @@ public class DeliveryManager : MonoBehaviour
     public List<OrderRecipeSO> GetWaitingOrderSOList()
     {
         return waitingOrderSOList;  
+    }
+
+    public int GetSuccessfulOrderCount()
+    {
+        return successfulOrderCount;
     }
 }
