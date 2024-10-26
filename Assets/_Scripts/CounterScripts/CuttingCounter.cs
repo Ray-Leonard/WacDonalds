@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using static IHasProgress;
 
@@ -15,6 +16,11 @@ public class CuttingCounter : BaseCounter, IHasProgress
     public static event EventHandler OnAnyCut;
     public event EventHandler<OnProgressChangedEventArgs> OnProgressChanged;
     public event EventHandler OnCut;
+
+    public new static void ResetStaticData()
+    {
+        OnAnyCut = null;
+    }
 
     public override void Interact(Player_TopDown player)
     {
@@ -89,6 +95,7 @@ public class CuttingCounter : BaseCounter, IHasProgress
 
             // fire off OnCut event
             OnCut?.Invoke(this, EventArgs.Empty);
+
             OnAnyCut?.Invoke(this, EventArgs.Empty);
 
             // compare the cutting progress with the max defined in the recipe

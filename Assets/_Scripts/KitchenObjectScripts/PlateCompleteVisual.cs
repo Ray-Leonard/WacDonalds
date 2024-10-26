@@ -28,6 +28,11 @@ public class PlateCompleteVisual : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        plateKitchenObject.OnIngredientAdded -= PlateKitchenObject_OnIngredientAdded;
+    }
+
 
     private void PlateKitchenObject_OnIngredientAdded(object sender, PlateKitchenObject.OnIngredientAddedEventArgs e)
     {

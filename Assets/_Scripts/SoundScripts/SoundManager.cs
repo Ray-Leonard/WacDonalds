@@ -18,6 +18,17 @@ public class SoundManager : MonoBehaviour
 
     }
 
+    private void OnDestroy()
+    {
+        DeliveryManager.Instance.OnOrderSuccess -= DeliveryManager_OnOrderSuccess;
+        DeliveryManager.Instance.OnOrderFailed -= DeliveryManager_OnOrderFailed;
+        CuttingCounter.OnAnyCut -= CuttingCounter_OnAnyCut;
+        Player_TopDown.Instance.OnPickedSomething -= PlayerTopDown_OnPickedSomething;
+        BaseCounter.OnAnyObjectPlacedHere -= BaseCounter_OnAnyObjectPlacedHere;
+        TrashCounter.OnAnyObjectTrashed -= TrashCounter_OnAnyObjectTrashed;
+        PlayerSound_TopDown.OnPlayerTopDownFootstep -= PlayerSound_TopDown_OnPlayerTopDownFootstep;
+    }
+
     private void PlayerSound_TopDown_OnPlayerTopDownFootstep(object sender, System.EventArgs e)
     {
         PlayerSound_TopDown playerSound = sender as PlayerSound_TopDown;

@@ -12,6 +12,11 @@ public class SelectedCounterVisual : MonoBehaviour
         Player_TopDown.Instance.OnSelectedCounterChanged += Player_OnSelectedCounterChanged;
     }
 
+    private void OnDestroy()
+    {
+        Player_TopDown.Instance.OnSelectedCounterChanged -= Player_OnSelectedCounterChanged;
+    }
+
     private void Player_OnSelectedCounterChanged(object sender, Player_TopDown.OnSelectedCounterChangedEventArgs e)
     {
         // show or hide the selected visual for the counter. (show if the player's selected counter is this counter, and vice versa)

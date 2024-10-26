@@ -25,6 +25,12 @@ public class PlatesCounterVisual : MonoBehaviour
         platesCounter.OnPlateRemoved += PlatesCounter_OnPlateRemoved;
     }
 
+    private void OnDestroy()
+    {
+        platesCounter.OnPlateSpawned -= PlatesCounter_OnPlateSpawned;
+        platesCounter.OnPlateRemoved -= PlatesCounter_OnPlateRemoved;
+    }
+
     private void PlatesCounter_OnPlateRemoved(object sender, System.EventArgs e)
     {
         // remove the top one from the stack

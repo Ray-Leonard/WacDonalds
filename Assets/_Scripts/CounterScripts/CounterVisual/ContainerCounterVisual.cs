@@ -20,6 +20,11 @@ public class ContainerCounterVisual : MonoBehaviour
         countainerCounter.OnPlayerGrabObject += CountainerCounter_OnPlayerGrabObject;
     }
 
+    private void OnDestroy()
+    {
+        countainerCounter.OnPlayerGrabObject -= CountainerCounter_OnPlayerGrabObject;
+    }
+
     private void CountainerCounter_OnPlayerGrabObject(object sender, System.EventArgs e)
     {
         // play the animation of container counter lid opening

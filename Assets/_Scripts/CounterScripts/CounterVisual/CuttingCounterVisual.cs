@@ -20,6 +20,11 @@ public class CuttingCounterVisual : MonoBehaviour
         cuttingCounter.OnCut += CuttingCounter_OnCut;
     }
 
+    private void OnDestroy()
+    {
+        cuttingCounter.OnCut -= CuttingCounter_OnCut;
+    }
+
     private void CuttingCounter_OnCut(object sender, System.EventArgs e)
     {
         // play the animation of cut

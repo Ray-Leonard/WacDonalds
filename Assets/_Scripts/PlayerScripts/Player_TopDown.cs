@@ -9,7 +9,6 @@ public class Player_TopDown : MonoBehaviour, IKitchenObjectParent
 
     public static Player_TopDown Instance { get; private set; }
     
-    [SerializeField] private GameInput gameInput;
     [Header("Movement")]
     [SerializeField] private float movementSpeed;
     [SerializeField] private float rotationSpeed;
@@ -52,11 +51,15 @@ public class Player_TopDown : MonoBehaviour, IKitchenObjectParent
     private void Start()
     {
         // listen to gameInput's OnInteractAction event
-        gameInput.OnInteractAction += GameInput_OnInteractAction;
-        gameInput.OnInteractAlternateAction += GameInput_OnInteractAlternateAction;
+        GameInput.Instance.OnInteractAction += GameInput_OnInteractAction;
+        GameInput.Instance.OnInteractAlternateAction += GameInput_OnInteractAlternateAction;
     }
 
-
+    private void OnDestroy()
+    {
+        GameInput.Instance.OnInteractAction -= GameInput_OnInteractAction;
+        GameInput.Instance.OnInteractAlternateAction -= GameInput_OnInteractAlternateAction;
+    }
 
     private void Update()
     {
@@ -103,7 +106,7 @@ public class Player_TopDown : MonoBehaviour, IKitchenObjectParent
 
     private void HandleInteractions()
     {
-        Vector2 inputVector = gameInput.GetTopDownMovementVectorNormalized();
+        Vector2 inputVector = GameInput.Instance.GetTopDownMovementVectorNormalized();
         Vector3 moveDir = new Vector3(inputVector.x, 0, inputVector.y);
 
         // record the moveDir into lastInteractDir so that lastInteractDir is also not zero when player is not moving.
@@ -211,7 +214,7 @@ public class Player_TopDown : MonoBehaviour, IKitchenObjectParent
     private void HandleMovement()
     {
         /// Get player input and calculate move direction
-        Vector2 inputVector = gameInput.GetTopDownMovementVectorNormalized();
+        Vector2 inputVector = GameInput.Instance.GetTopDownMovementVectorNormalized();
         Vector3 moveDir = new Vector3(inputVector.x, 0, inputVector.y);
 
         isWalking = moveDir != Vector3.zero;
