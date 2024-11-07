@@ -23,8 +23,11 @@ public class DeliveryManagerUI : MonoBehaviour
 
     private void OnDestroy()
     {
-        DeliveryManager.Instance.OnOrderSpawned -= DeliveryManager_OnOrderSpawned;
-        DeliveryManager.Instance.OnOrderCompleted -= DeliveryManager_OnOrderCompleted;
+        if(DeliveryManager.Instance != null)
+        {
+            DeliveryManager.Instance.OnOrderSpawned -= DeliveryManager_OnOrderSpawned;
+            DeliveryManager.Instance.OnOrderCompleted -= DeliveryManager_OnOrderCompleted;
+        }
     }
 
     private void DeliveryManager_OnOrderCompleted(object sender, System.EventArgs e)

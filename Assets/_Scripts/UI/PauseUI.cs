@@ -30,8 +30,11 @@ public class PauseUI : MonoBehaviour
 
     private void OnDestroy()
     {
-        GameManager.Instance.OnGamePaused -= GameManager_OnGamePaused;
-        GameManager.Instance.OnGameUnpaused -= GameManager_OnGameUnpaused;
+        if(GameManager.Instance != null)
+        {
+            GameManager.Instance.OnGamePaused -= GameManager_OnGamePaused;
+            GameManager.Instance.OnGameUnpaused -= GameManager_OnGameUnpaused;
+        }
     }
 
     private void GameManager_OnGameUnpaused(object sender, System.EventArgs e)

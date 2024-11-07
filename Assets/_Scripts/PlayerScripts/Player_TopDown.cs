@@ -57,8 +57,11 @@ public class Player_TopDown : MonoBehaviour, IKitchenObjectParent
 
     private void OnDestroy()
     {
-        GameInput.Instance.OnInteractAction -= GameInput_OnInteractAction;
-        GameInput.Instance.OnInteractAlternateAction -= GameInput_OnInteractAlternateAction;
+        if(GameInput.Instance != null)
+        {
+            GameInput.Instance.OnInteractAction -= GameInput_OnInteractAction;
+            GameInput.Instance.OnInteractAlternateAction -= GameInput_OnInteractAlternateAction;
+        }
     }
 
     private void Update()

@@ -23,7 +23,10 @@ public class PlateIconsUI : MonoBehaviour
 
     private void OnDestroy()
     {
-        plateKitchenObject.OnIngredientAdded -= PlateKitchenObject_OnIngredientAdded;
+        if(plateKitchenObject != null)
+        {
+            plateKitchenObject.OnIngredientAdded -= PlateKitchenObject_OnIngredientAdded;
+        }
     }
 
     private void PlateKitchenObject_OnIngredientAdded(object sender, PlateKitchenObject.OnIngredientAddedEventArgs e)

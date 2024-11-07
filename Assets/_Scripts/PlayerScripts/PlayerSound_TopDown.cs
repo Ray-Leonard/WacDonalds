@@ -7,6 +7,11 @@ public class PlayerSound_TopDown : MonoBehaviour
 {
     public static event EventHandler OnPlayerTopDownFootstep;
 
+    public static void ResetStaticData()
+    {
+        OnPlayerTopDownFootstep = null;
+    }
+
     private Player_TopDown player;
     private float footstepTimer;
     private float footstepTimerMax = 0.1f;

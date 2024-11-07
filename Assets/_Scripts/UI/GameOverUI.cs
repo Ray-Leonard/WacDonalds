@@ -13,7 +13,10 @@ public class GameOverUI : MonoBehaviour
 
     private void OnDestroy()
     {
-        GameManager.Instance.OnStateChanged -= GameManager_OnStateChanged;
+        if(GameManager.Instance != null)
+        {
+            GameManager.Instance.OnStateChanged -= GameManager_OnStateChanged;
+        }
     }
 
     private void GameManager_OnStateChanged(object sender, System.EventArgs e)

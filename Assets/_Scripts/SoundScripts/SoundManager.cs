@@ -20,10 +20,16 @@ public class SoundManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        DeliveryManager.Instance.OnOrderSuccess -= DeliveryManager_OnOrderSuccess;
-        DeliveryManager.Instance.OnOrderFailed -= DeliveryManager_OnOrderFailed;
+        if(DeliveryManager.Instance != null)
+        {
+            DeliveryManager.Instance.OnOrderSuccess -= DeliveryManager_OnOrderSuccess;
+            DeliveryManager.Instance.OnOrderFailed -= DeliveryManager_OnOrderFailed;
+        }
         CuttingCounter.OnAnyCut -= CuttingCounter_OnAnyCut;
-        Player_TopDown.Instance.OnPickedSomething -= PlayerTopDown_OnPickedSomething;
+        if (Player_TopDown.Instance)
+        {
+            Player_TopDown.Instance.OnPickedSomething -= PlayerTopDown_OnPickedSomething;
+        }
         BaseCounter.OnAnyObjectPlacedHere -= BaseCounter_OnAnyObjectPlacedHere;
         TrashCounter.OnAnyObjectTrashed -= TrashCounter_OnAnyObjectTrashed;
         PlayerSound_TopDown.OnPlayerTopDownFootstep -= PlayerSound_TopDown_OnPlayerTopDownFootstep;

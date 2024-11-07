@@ -28,7 +28,10 @@ public class ProgressBarUI : MonoBehaviour
 
     private void OnDestroy()
     {
-        progressItem.OnProgressChanged -= ProgressItem_OnProgressChanged;
+        if(progressItem != null )
+        {
+            progressItem.OnProgressChanged -= ProgressItem_OnProgressChanged;
+        }
     }
 
 

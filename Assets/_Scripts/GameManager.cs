@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -51,7 +48,10 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
 
-        GameInput.Instance.OnPauseAction -= GameInput_OnPauseAction;
+        if(GameInput.Instance != null)
+        {
+            GameInput.Instance.OnPauseAction -= GameInput_OnPauseAction;
+        }
     }
 
     private void GameInput_OnPauseAction(object sender, EventArgs e)

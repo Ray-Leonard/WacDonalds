@@ -22,7 +22,10 @@ public class ContainerCounterVisual : MonoBehaviour
 
     private void OnDestroy()
     {
-        countainerCounter.OnPlayerGrabObject -= CountainerCounter_OnPlayerGrabObject;
+        if(countainerCounter != null)
+        {
+            countainerCounter.OnPlayerGrabObject -= CountainerCounter_OnPlayerGrabObject;
+        }
     }
 
     private void CountainerCounter_OnPlayerGrabObject(object sender, System.EventArgs e)
