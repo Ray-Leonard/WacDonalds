@@ -4,7 +4,29 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
+    private const string PLAYER_PREFS_SFX_VOLUME = "SoundVolume";
+
+    public static SoundManager Instance { get; private set; }
+
     [SerializeField] AudioClipRefsSO audioDatabase;
+
+    private float volume = 1f;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(this);
+            Debug.LogError("There is more than one instance of Sound Manager");
+        }
+
+        // load the volume from player prefs
+        volume = PlayerPrefs.GetFloat(PLAYER_PREFS_SFX_VOLUME, volume);
+    }
 
     private void Start()
     {
@@ -15,8 +37,8 @@ public class SoundManager : MonoBehaviour
         BaseCounter.OnAnyObjectPlacedHere += BaseCounter_OnAnyObjectPlacedHere;
         TrashCounter.OnAnyObjectTrashed += TrashCounter_OnAnyObjectTrashed;
         PlayerSound_TopDown.OnPlayerTopDownFootstep += PlayerSound_TopDown_OnPlayerTopDownFootstep;
-
     }
+
 
     private void OnDestroy()
     {
@@ -76,15 +98,25 @@ public class SoundManager : MonoBehaviour
         PlaySound(audioDatabase.deliverySuccess, DeliveryCounter.Instance.transform.position);
     }
 
-
-    private void PlaySound(AudioClip[] audioClipArr, Vector3 position, float volume = 1)
+    private void PlaySound(AudioClip[] audioClipArr, Vector3 position, float volumeMultiplier = 1)
     {
-        AudioSource.PlayClipAtPoint(audioClipArr[Random.Range(0, audioClipArr.Length)], position, volume);
+        AudioSource.PlayClipAtPoint(audioClipArr[Random.Range(0, audioClipArr.Length)], position, volumeMultiplier * volume);
     }
 
 
-    private void PlaySound(AudioClip audioClip, Vector3 position, float volume = 1)
+    private void PlaySound(AudioClip audioClip, Vector3 position, float volumeMultiplyer = 1)
     {
-        AudioSource.PlayClipAtPoint(audioClip, position, volume);
+        AudioSource.PlayClipAtPoint(audioClip, position, volumeMultiplyer * volume);
+    }
+
+    public void SetVolume(float volume)
+    {
+        this.volume = volume;
+        PlayerPrefs.SetFloat(PLAYER_PREFS_SFX_VOLUME, volume);
+    }
+
+    public float GetVolume()
+    {
+        return volume;
     }
 }
